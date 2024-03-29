@@ -22,7 +22,7 @@ jobs:
       - name: Copy folder content recursively to vps
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: build
+          local: charting-frontend/build
           remote: /var/www/ruvik.xyz
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
