@@ -160,4 +160,8 @@ cython_debug/
 #.idea/
 
 #custom
-fred_key.txt
+fred_key
+examples/
+reports/
+resources/
+test_dynare.py

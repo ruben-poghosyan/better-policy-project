@@ -1,5 +1,5 @@
 from full_fred.fred import Fred
-fred = Fred('fred_key.txt')
+fred = Fred(api_key_file='fred_key')
 cache_categories = {}
 def getavailablecountries():
     # 32264 is the root category of countries

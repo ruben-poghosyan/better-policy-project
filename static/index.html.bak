@@ -1,0 +1,424 @@
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <title>Global Forecasting School</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+  .flex-container {
+    height: 100%;
+    display: flex;
+}
+
+.flex-child {
+    height: 100%;
+    flex: 1;
+}  
+
+.flex-child:first-child {
+    margin-right: 20px;
+} 
+body{
+  line-height: 1.5;
+  font-family: 'Poppins', sans-serif;
+}
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+.container{
+  max-width: 1170px;
+  margin:auto;
+}
+.row{
+  display: flex;
+  flex-wrap: wrap;
+}
+ul{
+  list-style: none;
+}
+.footer{
+  background-color: #24262b;
+    padding: 70px 0;
+}
+.footer-col{
+   width: 25%;
+   padding: 0 15px;
+}
+.footer-col h4{
+  font-size: 18px;
+  color: #ffffff;
+  text-transform: capitalize;
+  margin-bottom: 35px;
+  font-weight: 500;
+  position: relative;
+}
+.footer-col h4::before{
+  content: '';
+  position: absolute;
+  left:0;
+  bottom: -10px;
+  background-color: #e91e63;
+  height: 2px;
+  box-sizing: border-box;
+  width: 50px;
+}
+.footer-col ul li:not(:last-child){
+  margin-bottom: 10px;
+}
+.footer-col ul li a{
+  font-size: 16px;
+  text-transform: capitalize;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 300;
+  color: #bbbbbb;
+  display: block;
+  transition: all 0.3s ease;
+}
+.footer-col ul li a:hover{
+  color: #ffffff;
+  padding-left: 8px;
+}
+.footer-col .social-links a{
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  background-color: rgba(255,255,255,0.2);
+  margin:0 10px 10px 0;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 50%;
+  color: #ffffff;
+  transition: all 0.5s ease;
+}
+.footer-col .social-links a:hover{
+  color: #24262b;
+  background-color: #ffffff;
+}
+
+/*responsive*/
+@media(max-width: 767px){
+  .footer-col{
+    width: 50%;
+    margin-bottom: 30px;
+}
+}
+@media(max-width: 574px){
+  .footer-col{
+    width: 100%;
+}
+}
+
+
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .topnav {
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+  .topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .topnav a.active {
+    background-color: #e91e63;
+    color: white;
+  }
+  </style>
+<body onload="startup();">
+  <div class="topnav">
+    <a class="active" href="#home">Home</a>
+    <a href="#news">News</a>
+    <a href="#contact">Contact</a>
+    <a href="#about">About</a>
+  
+  </div>
+  <div class="flex-container">
+
+    <div class="flex-child">
+      <div id="chart"> </div>
+      <h4>hp filter</h4>
+      <br>
+      <input type="number" name="lambda" value="1400" />
+      <button onclick="hpfilter_click_handler()">Apply Hodrick–Prescott Filter</button>
+      <br>
+      <h4>Moving Average</h4>
+      <input type="number" name="window_size" value="6"/>
+      <button onclick="moving_average_handler()">Apply Moving Average</button>
+
+    </div>
+    
+    <div class="flex-child">
+      <h2 align="center">Get Data from FRED</h2>
+      <br>
+      <h3>Select a country</h3>
+      <br>
+      <select style="max-width: 20%;" onchange="country_selected()" id="country_options">
+        <option>Select Country</option>
+      </select>
+      <br>
+      <br>
+      <br>
+      <h3> Search for Timeseries</h3>
+      <select style="max-width: 20%;" id="series_options">
+
+      </select>
+      <br>
+      <br>
+      <br>
+      <button onclick="get_series()">Plot Timeseries Data</button>
+    </div>
+    
+  </div>
+  
+  <script>
+    const PROD = 0
+    let main_series = {name:"series", data:[]}
+    api_base_url = PROD ? 'https://ruvik.xyz' : 'http://127.0.0.1:8000'
+    const get = async (url, params) => {
+    const response = await fetch(url + '?' + new URLSearchParams(params))
+    const data = await response.json()
+
+    return data
+}
+    async function country_selected(){
+      id = $("#country_options :selected").val();
+      res  = await get(api_base_url+'/api/getseriesmeta',{cat_id:id})
+      seriess = res['seriess']
+      $('#series_options').empty()
+      for(var item in seriess)
+      {
+        $('<option value="'+seriess[item].id+'">'+seriess[item].title+'</option>').appendTo('#series_options');
+      }
+      console.log(res.count)
+    }
+    async function get_series(){
+      id = $("#series_options :selected").val();
+      res  = await get(api_base_url+'/api/getseries',{ser_id:id})
+      
+      dates = Object.values(res.date)
+      values = Object.values(res.value)
+      const plot_data = dates.map((x, i) => ({ x: x, y: values[i] }));
+      main_series = {
+            name: 'Series',
+            data: plot_data
+          }
+      chart.updateSeries([main_series], true);
+    }
+    async function startup(){
+    
+      data = await getcountries()
+      countries = data['categories']
+      for(var item in countries)
+      {
+        $('<option value="'+countries[item].id+'">'+countries[item].name+'</option>').appendTo('#country_options');
+      }
+    }
+    i = 0
+    async function hpfilter(series, l = 1400) {
+      let data = null
+      return fetch(api_base_url + '/api/hpfilter', {
+        method: "POST",
+        body: JSON.stringify({
+          series: series,
+          options: {l:l}
+        }),
+        headers: {
+          "Content-type": "application/json"
+        }
+      }).then((response) => response.json()).then(json => { return json.result });
+    }
+    async function moving_average(series, window_size=6) {
+      let data = null
+      return fetch(api_base_url + '/api/moving_average', {
+        method: "POST",
+        body: JSON.stringify({
+          series: series,
+          options: {window_size: window_size}
+        }),
+        headers: {
+          "Content-type": "application/json"
+        }
+      }).then((response) => response.json()).then(json => { return json.result });
+    }
+    async function getcountries() {
+      return fetch(api_base_url +'/api/getcountries', {
+        method: "GET",
+      }).then((response) => response.json()).then(json => {return json});
+    }
+    function redraw(response) {
+      temp = []
+        for (let index = 0; index < response.length; index++) {
+          dict = {}
+          dict.x = main_series.data[i].x
+          dict.y = response[index];
+          temp.push(dict)
+
+        }
+        if (i != 0) {
+          chart.updateSeries([main_series, {
+            name: 'Hodrick–Prescott filter',
+            data: temp
+          }], true)
+        } else {
+          chart.appendSeries({
+            name: 'Hodrick–Prescott filter',
+            data: temp
+          }, true);
+          i++;
+        }
+    }
+    async function hpfilter_click_handler() {
+      lambda = document.getElementsByName('lambda')[0].value;
+      if (lambda != 0) {
+
+        y = main_series.data.map((e) => parseFloat(e.y))
+        response = await hpfilter(y, lambda)
+        redraw(response);
+
+      }
+      else {
+        window.alert("lambda can't be 0");
+      }
+    }
+    async function moving_average_handler() {
+      let window_size = document.getElementsByName('window_size')[0].value
+      if (window_size !=0) {
+        y = main_series.data.map((e) => parseFloat(e.y))
+        response = await moving_average(y, window_size)
+        redraw(response)
+      }
+      else {
+        window.alert("window size can't be 0");
+      }
+    }
+    var options = {
+      series: [main_series],
+      chart: {
+        stacked: false,
+
+        toolbar: {
+          show: true
+        },
+
+        zoom: {
+          type: 'x',
+
+          enabled: true,
+
+          autoScaleYaxis: true
+        }
+      },
+
+      colors: ['#1f87e6', '#ff5c7c'],
+
+      dataLabels: {
+        enabled: false
+      },
+
+      grid: {
+        yaxis: {
+          // set to false to remove horizontal lines through graph
+
+          lines: {
+            show: true
+          }
+        }
+      },
+
+      legend: {
+        show: true,
+
+        position: 'top',
+
+        horizontalAlign: 'left',
+
+        labels: {}
+      },
+
+      stroke: {
+        width: 3,
+
+        curve: 'smooth',
+
+        lineCap: 'butt',
+
+        dashArray: [0, 3]
+      },
+
+      theme: {},
+    }
+
+    var chart = new ApexCharts(document.querySelector('#chart'), options)
+    chart.render()
+
+  </script>
+
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="footer-col">
+        <h4>company</h4>
+        <ul>
+          <li><a href="#">about us</a></li>
+          <li><a href="#">our services</a></li>
+          <li><a href="#">privacy policy</a></li>
+          <li><a href="#">affiliate program</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>get help</h4>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">shipping</a></li>
+          <li><a href="#">returns</a></li>
+          <li><a href="#">order status</a></li>
+          <li><a href="#">payment options</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>online shop</h4>
+        <ul>
+          <li><a href="#">watch</a></li>
+          <li><a href="#">bag</a></li>
+          <li><a href="#">shoes</a></li>
+          <li><a href="#">dress</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>follow us</h4>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
