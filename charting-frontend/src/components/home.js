@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Home = () => {
-    return (<p>Home</p>)
+    return (<p>Homepage Content for Better Policy Project</p>)
 }
 
 export default Home
