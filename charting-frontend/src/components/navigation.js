@@ -11,10 +11,10 @@ const Navigation=()=>{
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto"> 
-                        <Nav.Link as={Link} to="/">Home</Nav.Link>
-                        <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
-                        <Nav.Link as={Link} to="/charts">Charts</Nav.Link>
-                        <Nav.Link as={Link} to="/about">About</Nav.Link>
+                        <Nav.Link className='custom-navlink' as={Link} to="/">Home</Nav.Link>
+                        <Nav.Link className='custom-navlink' as={Link} to="/dashboard">Dashboard</Nav.Link>
+                        <Nav.Link className='custom-navlink' as={Link} to="/charts">Charts</Nav.Link>
+                        <Nav.Link className='custom-navlink' as={Link} to="/about">About</Nav.Link>
                     </Nav>  
                 </Navbar.Collapse>
             </Container>
