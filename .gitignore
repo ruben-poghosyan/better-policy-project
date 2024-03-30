@@ -165,3 +165,4 @@ examples/
 reports/
 resources/
 test_dynare.py
+chartconfig.html
