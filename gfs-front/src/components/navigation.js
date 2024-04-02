@@ -1,11 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {Link} from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
-const Navigation=()=>{
+const ScrollAwareNavbar=()=> {
+    const [prevScrollPos, setPrevScrollPos] = useState(0);
+    const [visible, setVisible] = useState(true);
+  
+    useEffect(() => {
+      const handleScroll = () => {
+        const currentScrollPos = window.pageYOffset;
+  
+        setVisible(
+          (prevScrollPos > currentScrollPos && prevScrollPos - currentScrollPos > 50) ||
+            currentScrollPos < 800
+        );
+  
+        setPrevScrollPos(currentScrollPos);
+      };
+  
+      window.addEventListener('scroll', handleScroll);
+  
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, [prevScrollPos, visible]);
+
     return (    
-        <Navbar expand="lg" className="bg-body-tertiary">
+        <Navbar bg="light" expand="lg" fixed="top" style={{ transition: 'top 0.6s', top: visible ? '0' : '-60px' }}>
             <Container>
                 <Navbar.Brand href="#home">Company Inc.</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -13,13 +35,18 @@ const Navigation=()=>{
                     <Nav className="me-auto"> 
                         <Nav.Link className='custom-navlink' as={Link} to="/">Home</Nav.Link>
                         <Nav.Link className='custom-navlink' as={Link} to="/dashboard">Dashboard</Nav.Link>
+                        <Nav.Link className='custom-navlink' as={Link} to="/students">Students</Nav.Link>
                         <Nav.Link className='custom-navlink' as={Link} to="/charts">Charts</Nav.Link>
                         <Nav.Link className='custom-navlink' as={Link} to="/about">About</Nav.Link>
                     </Nav>  
+                    <div className="d-lg-flex col-lg-3 justify-content-lg-end">
+                        <button className="btn btn-primary" style={{marginRight:"10px"}}>Register</button>
+                        <button className="btn btn-primary">Login</button>
+                    </div>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
     )
 }
 
-export default Navigation;
+export default ScrollAwareNavbar;

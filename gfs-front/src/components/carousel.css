@@ -1,0 +1,10 @@
+.parent {
+    display: flex;
+    justify-content: center; /* horizontally center */
+    
+  }
+  
+  .child {
+    max-width: 800px; /* adjust maximum width of the carousel */
+    /* Additional styles for the carousel if needed */
+  }
