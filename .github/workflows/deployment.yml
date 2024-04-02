@@ -7,7 +7,7 @@ jobs:
   Build:
     defaults:
       run:
-        working-directory: ./charting-frontend
+        working-directory: ./gfs-front
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -22,7 +22,7 @@ jobs:
       - name: Copy folder content recursively to vps
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: charting-frontend/build
+          local: gfs-front/build
           remote: /var/www/ruvik.xyz
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
