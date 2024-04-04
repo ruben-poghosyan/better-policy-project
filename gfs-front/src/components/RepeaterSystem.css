@@ -1,0 +1,24 @@
+.item-row {
+    margin-bottom: 20px;
+  }
+  
+  .item-col {
+    padding: 0 10px;
+  }
+  
+  .item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .item-info {
+    padding: 10px 0;
+  }
+  
+  @media (max-width: 768px) {
+    .item-col {
+      margin-bottom: 20px;
+    }
+  }
+  

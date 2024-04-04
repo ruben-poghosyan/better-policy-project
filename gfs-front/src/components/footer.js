@@ -1,6 +1,6 @@
 import React from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
-const Footer = () => {
+const Footer = ({socialMediaArray}) => {
     return (
         <div className="container">
   <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
@@ -12,9 +12,8 @@ const Footer = () => {
     </div>
 
     <ul className="nav col-md-4 justify-content-end list-unstyled d-flex">
-      <li className="ms-3"><a className="text-body-secondary" href="#"><i className="bi bi-linkedin" style={{"fontSize":"1.5rem"}}></i></a></li>
-      <li className="ms-3"><a className="text-body-secondary" href="#"><i className="bi bi-twitter" style={{"fontSize":"1.5rem"}}></i></a></li>
-      <li className="ms-3"><a className="text-body-secondary" href="#"><i className="bi bi-youtube" style={{"fontSize":"1.5rem"}}></i></a></li>
+     {socialMediaArray.map((item)=> <li key={item.id} className="ms-3"><a className="text-body-secondary" href="#"><i className={"bi bi-"+ item.media} style={{"fontSize":"1.5rem"}}></i></a></li>)}
+      
     </ul>
   </footer>
 </div>

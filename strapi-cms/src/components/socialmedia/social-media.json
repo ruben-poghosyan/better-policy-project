@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_socialmedia_social_medias",
+  "info": {
+    "displayName": "social media",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "media": {
+      "type": "enumeration",
+      "enum": [
+        "facebook",
+        "linkedin",
+        "youtube",
+        "twitter"
+      ],
+      "required": true
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}

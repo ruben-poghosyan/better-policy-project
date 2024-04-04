@@ -4,10 +4,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom'
-import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+
+console.log(process.env.NODE_ENV)
 
 const client = new ApolloClient({
-  uri: 'http://localhost:1337/api/',
+  uri: "http://localhost:1337/graphql",
   cache: new InMemoryCache(),
 });
 

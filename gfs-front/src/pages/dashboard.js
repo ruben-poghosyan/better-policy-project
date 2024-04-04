@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Dashboard = () => {
-    return (<>asd</>)
+    return (<>Coming Soon ...</>)
 }
 
 export default Dashboard

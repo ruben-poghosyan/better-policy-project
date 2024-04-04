@@ -4,7 +4,8 @@
   "info": {
     "singularName": "featured-content",
     "pluralName": "featured-contents",
-    "displayName": "FeaturedContent"
+    "displayName": "FeaturedContent",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -19,6 +20,9 @@
     },
     "Description": {
       "type": "text"
+    },
+    "url": {
+      "type": "string"
     }
   }
 }

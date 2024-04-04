@@ -10,26 +10,19 @@ const ScrollAwareNavbar=()=> {
     useEffect(() => {
       const handleScroll = () => {
         const currentScrollPos = window.pageYOffset;
-  
-        setVisible(
-          (prevScrollPos > currentScrollPos && prevScrollPos - currentScrollPos > 50) ||
-            currentScrollPos < 800
-        );
-  
+        setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
         setPrevScrollPos(currentScrollPos);
       };
   
       window.addEventListener('scroll', handleScroll);
   
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
+      return () => window.removeEventListener('scroll', handleScroll);
     }, [prevScrollPos, visible]);
 
     return (    
-        <Navbar bg="light" expand="lg" fixed="top" style={{ transition: 'top 0.6s', top: visible ? '0' : '-60px' }}>
+        <Navbar className="shadow" bg="light" expand="lg" fixed="top" style={{ transition: 'top 0.6s', top: visible ? '0' : '-100px' }}>
             <Container>
-                <Navbar.Brand href="#home">Company Inc.</Navbar.Brand>
+                <Navbar.Brand href="#">Company Inc.</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto"> 
@@ -41,7 +34,7 @@ const ScrollAwareNavbar=()=> {
                     </Nav>  
                     <div className="d-lg-flex col-lg-3 justify-content-lg-end">
                         <button className="btn btn-primary" style={{marginRight:"10px"}}>Register</button>
-                        <button className="btn btn-primary">Login</button>
+                        <button className="btn btn-light">Login</button>
                     </div>
                 </Navbar.Collapse>
             </Container>
