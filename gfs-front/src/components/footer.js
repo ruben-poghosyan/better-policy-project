@@ -12,7 +12,7 @@ const Footer = ({socialMediaArray}) => {
     </div>
 
     <ul className="nav col-md-4 justify-content-end list-unstyled d-flex">
-     {socialMediaArray.map((item)=> <li key={item.id} className="ms-3"><a className="text-body-secondary" href="#"><i className={"bi bi-"+ item.media} style={{"fontSize":"1.5rem"}}></i></a></li>)}
+     {socialMediaArray.map((item)=> <li key={item.id} className="ms-3"><a className="text-body-secondary" target="_blank" href={item.url}><i className={"bi bi-"+ item.media} style={{"fontSize":"1.5rem"}}></i></a></li>)}
       
     </ul>
   </footer>

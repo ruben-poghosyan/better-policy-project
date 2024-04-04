@@ -8,7 +8,23 @@ export interface SocialmediaSocialMedia extends Schema.Component {
   };
   attributes: {
     media: Attribute.Enumeration<
-      ['facebook', 'linkedin', 'youtube', 'twitter']
+      [
+        'facebook',
+        'linkedin',
+        'youtube',
+        'twitter',
+        'pinterest',
+        'github',
+        'stack-overflow',
+        'slack',
+        'reddit',
+        'tiktok',
+        'wechat',
+        'whatsapp',
+        'vimeo',
+        'twitter-x',
+        'twitch'
+      ]
     > &
       Attribute.Required;
     url: Attribute.String;

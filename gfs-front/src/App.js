@@ -8,6 +8,7 @@ import Home from './pages/home';
 import Students from './pages/students';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './components/footer';
+import Loading from './components/centeredspinner';
 import { useQuery, gql } from '@apollo/client';
 const getFooterSocialMediaLinks = gql`
 query {
@@ -26,7 +27,7 @@ query {
 `
 function App() {
   const { loading, error, data } = useQuery(getFooterSocialMediaLinks);
-  if (loading) return (<p>Loading ...</p>)
+  if (loading) return (<Loading/>)
   if (error) return (<p>Error :(</p>)
   return (
    <>
@@ -34,7 +35,7 @@ function App() {
     <div className='content-root' style={{paddingTop:"100px"}}>
       <div className='content'>
       <Routes>
-        <Route path="/" element={<Home/>} />        
+        <Route path="/" element={<Home/>} />
         <Route path="/charts"  element={<Charts/>} />
         <Route exact path='/students' element={<Students/>}/>
         <Route exact path='/students/:id' element={<Students/>} />

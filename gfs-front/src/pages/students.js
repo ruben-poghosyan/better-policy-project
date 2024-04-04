@@ -3,6 +3,7 @@ import RepeaterSystem from "../components/repeater";
 import { useQuery, gql } from '@apollo/client';
 import {Pagination } from 'react-bootstrap';
 import { useParams, useNavigate } from "react-router-dom";
+import Loading from "../components/centeredspinner";
 
 const getStudents = gql`
 query students($id: Int!){
@@ -44,7 +45,7 @@ const Students = () => {
     const { loading, error, data } = useQuery(getStudents, {
       variables: {id}
     });
-    if (loading) return (<p>Loading ...</p>)
+    if (loading) return (<Loading/>)
     if (error) return (<p>Error :(</p>)
     const currentPage = data.students.meta.pagination.page
     const totalPage = data.students.meta.pagination.pageCount
@@ -67,11 +68,11 @@ const Students = () => {
     return (
       <>
        <Pagination className="justify-content-center">
-        <Pagination.First disabled={currentPage==1} onClick={() => navigate('/students/'+ 1)} />
-        <Pagination.Prev disabled={currentPage==1} onClick={() => navigate('/students/'+ (currentPage - 1))} />
+        <Pagination.First disabled={currentPage===1} onClick={() => navigate('/students/'+ 1)} />
+        <Pagination.Prev disabled={currentPage===1} onClick={() => navigate('/students/'+ (currentPage - 1))} />
         {items}
-        <Pagination.Next disabled={currentPage==totalPage} onClick={() => navigate('/students/'+ (currentPage + 1))}/>
-        <Pagination.Last disabled={currentPage==totalPage} onClick={() => navigate('/students/' + totalPage)} />
+        <Pagination.Next disabled={currentPage===totalPage} onClick={() => navigate('/students/'+ (currentPage + 1))}/>
+        <Pagination.Last disabled={currentPage===totalPage} onClick={() => navigate('/students/' + totalPage)} />
       </Pagination>
       <RepeaterSystem currentItems={currentStudents}></RepeaterSystem>
       </>
