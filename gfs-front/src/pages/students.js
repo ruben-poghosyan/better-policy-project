@@ -3,9 +3,10 @@ import RepeaterSystem from "../components/repeater";
 import { useQuery, gql } from '@apollo/client';
 import {Pagination } from 'react-bootstrap';
 import { useParams, useNavigate } from "react-router-dom";
+
 const getStudents = gql`
 query students($id: Int!){
-  students (pagination: { page: $id, pageSize: 3 }) {
+  students (pagination: { page: $id, pageSize: 4 }) {
     meta {
       pagination {
         total
@@ -30,14 +31,13 @@ query students($id: Int!){
       }
     }
   }
-}
+}`
 
-`
 const Students = () => {
     const navigate = useNavigate();
     let {id} = useParams() 
     id = parseInt(id)
-    if (! (id > 0) ){
+    if (! (id > 0)){
       id = 0
     }
 
@@ -52,7 +52,7 @@ const Students = () => {
     let currentStudents = []
     let items = []
     for (let index = 1; index <= totalPage; index++) {
-      items.push( <Pagination.Item key={index} onClick={() => navigate('/students/'+ index)}>{index}</Pagination.Item>)
+      items.push( <Pagination.Item active={index === currentPage} key={index} onClick={() => navigate('/students/'+ index)}>{index}</Pagination.Item>)
     }
     currentStudentsData.forEach(element => {
       let obj = {}
@@ -60,18 +60,21 @@ const Students = () => {
       obj.title = element.attributes.title
       obj.level = element.attributes.level
       if(element.attributes.pfp.data) {
-        obj.url = "http://localhost:1337" + element.attributes.pfp.data.attributes.url
+        obj.url = process.env.REACT_APP_CMS_URI + element.attributes.pfp.data.attributes.url
       }
       currentStudents.push(obj)
     });
     return (
       <>
        <Pagination className="justify-content-center">
+        <Pagination.First disabled={currentPage==1} onClick={() => navigate('/students/'+ 1)} />
+        <Pagination.Prev disabled={currentPage==1} onClick={() => navigate('/students/'+ (currentPage - 1))} />
         {items}
+        <Pagination.Next disabled={currentPage==totalPage} onClick={() => navigate('/students/'+ (currentPage + 1))}/>
+        <Pagination.Last disabled={currentPage==totalPage} onClick={() => navigate('/students/' + totalPage)} />
       </Pagination>
       <RepeaterSystem currentItems={currentStudents}></RepeaterSystem>
       </>
-   
       );
 }
 
