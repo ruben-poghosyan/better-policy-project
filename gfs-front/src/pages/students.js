@@ -7,7 +7,7 @@ import Loading from "../components/centeredspinner";
 
 const getStudents = gql`
 query students($id: Int!){
-  students (pagination: { page: $id, pageSize: 4 }) {
+  students (pagination: { page: $id, pageSize: 9 }) {
     meta {
       pagination {
         total
@@ -63,6 +63,7 @@ const Students = () => {
       if(element.attributes.pfp.data) {
         obj.url = process.env.REACT_APP_CMS_URI + element.attributes.pfp.data.attributes.url
       }
+      obj.clickHandler = () => {navigate('/student/'+ element.id)}
       currentStudents.push(obj)
     });
     return (

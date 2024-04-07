@@ -4,7 +4,7 @@
   "info": {
     "singularName": "student",
     "pluralName": "students",
-    "displayName": "Student",
+    "displayName": "Students",
     "description": ""
   },
   "options": {
@@ -23,7 +23,7 @@
         "Female"
       ],
       "default": "Male",
-      "required": true
+      "required": false
     },
     "pfp": {
       "type": "media",
@@ -41,6 +41,21 @@
     },
     "level": {
       "type": "integer"
+    },
+    "bio": {
+      "type": "customField",
+      "options": {
+        "output": "Markdown",
+        "preset": "standard"
+      },
+      "customField": "plugin::ckeditor.CKEditor"
+    },
+    "ranking": {
+      "type": "integer",
+      "default": 9999
+    },
+    "joinDate": {
+      "type": "date"
     }
   }
 }

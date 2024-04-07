@@ -10,7 +10,7 @@ const CustomCarousel = ({elementsArray}) => {
   return (
     <div className="parent">
       <Swiper autoplay={{
-          delay: 4000,
+          delay: 2000,
           disableOnInteraction: false,
           pauseOnMouseEnter: true
         }} pagination={{dynamicBullets: true,}} navigation={true} modules={[Autoplay, Navigation, Pagination]} className=" child">

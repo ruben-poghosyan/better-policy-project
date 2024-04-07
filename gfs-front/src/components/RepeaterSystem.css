@@ -12,6 +12,10 @@
     padding: 10px;
     margin-bottom: 20px;
   }
+
+  .item:hover {
+    cursor: pointer;
+  }
   
   .item-info {
     padding: 10px 0;

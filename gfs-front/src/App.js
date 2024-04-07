@@ -10,6 +10,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './components/footer';
 import Loading from './components/centeredspinner';
 import { useQuery, gql } from '@apollo/client';
+import Chart from './pages/chart';
+import Student from './pages/student';
 const getFooterSocialMediaLinks = gql`
 query {
   footer {
@@ -36,7 +38,10 @@ function App() {
       <div className='content'>
       <Routes>
         <Route path="/" element={<Home/>} />
-        <Route path="/charts"  element={<Charts/>} />
+        <Route path='/chart/:id' element={<Chart/>}/>
+        <Route exact path="/charts"  element={<Charts/>} />
+        <Route exact path='/charts/:id' element={<Charts/>}/>
+        <Route exact path="/student/:id" element={<Student/>}/>
         <Route exact path='/students' element={<Students/>}/>
         <Route exact path='/students/:id' element={<Students/>} />
         <Route path="/dashboard"  element={<Dashboard />}/>

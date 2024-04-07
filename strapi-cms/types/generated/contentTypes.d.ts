@@ -800,7 +800,14 @@ export interface ApiAboutAbout extends Schema.SingleType {
     draftAndPublish: true;
   };
   attributes: {
-    description: Attribute.RichText;
+    description: Attribute.RichText &
+      Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'Markdown';
+          preset: 'rich';
+        }
+      >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -885,12 +892,45 @@ export interface ApiFooterFooter extends Schema.SingleType {
   };
 }
 
+export interface ApiPublicChartPublicChart extends Schema.CollectionType {
+  collectionName: 'public_charts';
+  info: {
+    singularName: 'public-chart';
+    pluralName: 'public-charts';
+    displayName: 'PublicCharts';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Thumbnail: Attribute.Media;
+    Title: Attribute.String;
+    chartOptions: Attribute.JSON & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::public-chart.public-chart',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::public-chart.public-chart',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiStudentStudent extends Schema.CollectionType {
   collectionName: 'students';
   info: {
     singularName: 'student';
     pluralName: 'students';
-    displayName: 'Student';
+    displayName: 'Students';
     description: '';
   };
   options: {
@@ -899,11 +939,20 @@ export interface ApiStudentStudent extends Schema.CollectionType {
   attributes: {
     Name: Attribute.String & Attribute.Required;
     Gender: Attribute.Enumeration<['Male', 'Female']> &
-      Attribute.Required &
       Attribute.DefaultTo<'Male'>;
     pfp: Attribute.Media;
     title: Attribute.String;
     level: Attribute.Integer;
+    bio: Attribute.RichText &
+      Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'Markdown';
+          preset: 'standard';
+        }
+      >;
+    ranking: Attribute.Integer & Attribute.DefaultTo<9999>;
+    joinDate: Attribute.Date;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -943,6 +992,7 @@ declare module '@strapi/types' {
       'api::about.about': ApiAboutAbout;
       'api::featured-content.featured-content': ApiFeaturedContentFeaturedContent;
       'api::footer.footer': ApiFooterFooter;
+      'api::public-chart.public-chart': ApiPublicChartPublicChart;
       'api::student.student': ApiStudentStudent;
     }
   }

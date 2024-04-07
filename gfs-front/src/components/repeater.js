@@ -10,12 +10,12 @@ const RepeaterSystem = ({currentItems}) => {
       <Row className="item-row">
         {currentItems.map((item, index) => (
           <Col key={index} sm={6} md={6} lg={4} className="item-col">
-            <div className="item shadow">
+            <div className="item shadow" onClick={item.clickHandler}>
               <Image src={item.url} fluid className="item-image" style={{width:"250px", height:"250px", objectFit:"cover"}} />
               <div className="item-info">
                 <h3>{item.name}</h3>
                 <p>{item.title}</p>
-                <p>Level: {item.level}</p>
+                {item.level ? <p>Level: {item.level}</p> : <></>}
               </div>
             </div>
           </Col>

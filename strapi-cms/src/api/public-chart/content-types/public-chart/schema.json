@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "public_charts",
+  "info": {
+    "singularName": "public-chart",
+    "pluralName": "public-charts",
+    "displayName": "PublicCharts",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Title": {
+      "type": "string"
+    },
+    "chartOptions": {
+      "type": "json",
+      "required": true
+    }
+  }
+}
