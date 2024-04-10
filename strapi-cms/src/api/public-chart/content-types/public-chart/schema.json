@@ -29,6 +29,9 @@
     "chartOptions": {
       "type": "json",
       "required": true
+    },
+    "description": {
+      "type": "richtext"
     }
   }
 }

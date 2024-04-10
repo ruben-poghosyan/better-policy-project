@@ -4,6 +4,7 @@ import Loading from '../components/centeredspinner';
 import HighchartsReact from 'highcharts-react-official';
 import { useQuery, gql } from '@apollo/client';
 import { useParams } from "react-router-dom";
+import ReactMarkdown from 'react-markdown';
 require("highcharts/modules/exporting.js")(Highcharts);
 // TODO
 const getChartbyId = gql`
@@ -12,7 +13,8 @@ query getChartbyId ($id : ID!){
       data {
         id,
         attributes {
-          chartOptions 
+          chartOptions,
+          description
         }
       }
     }
@@ -26,12 +28,12 @@ const Chart = () => {
       });
     if (loading) return (<Loading/>)
     if (error) return (<p>Error :(</p>)
+    const options = JSON.parse(JSON.stringify(data.publicChart.data.attributes.chartOptions.options))
     return (
         <div className='shadow' style={{padding:"25px 25px 25px 25px", marginLeft:"25px", marginRight:"25px"}}>
-    <HighchartsReact
+     <HighchartsReact
       highcharts={Highcharts}
-      options={data.publicChart.data.attributes.chartOptions.options}
-    />
+      options={options}/>
   </div>)
   }
   

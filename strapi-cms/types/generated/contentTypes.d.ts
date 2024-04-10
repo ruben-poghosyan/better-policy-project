@@ -907,6 +907,7 @@ export interface ApiPublicChartPublicChart extends Schema.CollectionType {
     Thumbnail: Attribute.Media;
     Title: Attribute.String;
     chartOptions: Attribute.JSON & Attribute.Required;
+    description: Attribute.RichText;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
