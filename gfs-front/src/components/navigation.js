@@ -30,11 +30,7 @@ const ScrollAwareNavbar=()=> {
                         <Nav.Link className='custom-navlink' as={Link} to="/students">Students</Nav.Link>
                         <Nav.Link className='custom-navlink' as={Link} to="/charts">Charts</Nav.Link>
                         <Nav.Link className='custom-navlink' as={Link} to="/about">About</Nav.Link>
-                    </Nav>  
-                    <div className="d-lg-flex col-lg-3 justify-content-lg-end">
-                        <button className="btn btn-primary" style={{marginRight:"10px"}}>Register</button>
-                        <button className="btn btn-light">Login</button>
-                    </div>
+                    </Nav>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
