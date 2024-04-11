@@ -40,5 +40,4 @@ const ScrollAwareNavbar=()=> {
         </Navbar>
     )
 }
-
 export default ScrollAwareNavbar;
