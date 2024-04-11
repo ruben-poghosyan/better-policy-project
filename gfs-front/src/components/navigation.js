@@ -22,7 +22,7 @@ const ScrollAwareNavbar=()=> {
     return (    
         <Navbar className="shadow" bg="light" expand="lg" fixed="top" style={{ transition: 'top 0.6s', top: visible ? '0' : '-100px' }}>
             <Container>
-                <Navbar.Brand href="#">Company Inc.</Navbar.Brand>
+                <Navbar.Brand href="#">Global Forecasting School</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto"> 

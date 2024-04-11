@@ -64,11 +64,11 @@ const Charts = () => {
   return (
     <>
      <Pagination className="justify-content-center">
-      <Pagination.First disabled={currentPage===1} onClick={() => navigate('/students/'+ 1)} />
-      <Pagination.Prev disabled={currentPage===1} onClick={() => navigate('/students/'+ (currentPage - 1))} />
+      <Pagination.First disabled={currentPage===1} onClick={() => navigate('/charts/'+ 1)} />
+      <Pagination.Prev disabled={currentPage===1} onClick={() => navigate('/charts/'+ (currentPage - 1))} />
       {items}
-      <Pagination.Next disabled={currentPage===totalPage} onClick={() => navigate('/students/'+ (currentPage + 1))}/>
-      <Pagination.Last disabled={currentPage===totalPage} onClick={() => navigate('/students/' + totalPage)} />
+      <Pagination.Next disabled={currentPage===totalPage} onClick={() => navigate('/charts/'+ (currentPage + 1))}/>
+      <Pagination.Last disabled={currentPage===totalPage} onClick={() => navigate('/charts/' + totalPage)} />
     </Pagination>
     <RepeaterSystem currentItems={currentCharts}></RepeaterSystem>
     </>

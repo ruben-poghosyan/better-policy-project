@@ -31,6 +31,7 @@ function App() {
   const { loading, error, data } = useQuery(getFooterSocialMediaLinks);
   if (loading) return (<Loading/>)
   if (error) return (<p>Error :(</p>)
+  const socialMedia = data.footer.data.attributes.mediaLinks
   return (
    <>
    <ScrollAwareNavbar />
@@ -49,7 +50,7 @@ function App() {
         <Route path="*" element={<p>There's nothing here: 404!</p>} />
       </Routes>
       </div>   
-      <div className='custom-footer'><Footer socialMediaArray={data.footer.data.attributes.mediaLinks}></Footer></div>
+      <div className='custom-footer'><Footer socialMediaArray={socialMedia}></Footer></div>
     </div>
     </>
    
