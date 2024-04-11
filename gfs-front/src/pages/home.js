@@ -18,8 +18,9 @@ const Home = () => {
   const { loading, error, data } = useQuery(getFeaturedContent);
   if (loading) return (<Loading/>)
   if (error) return (<p>Error :(</p>)
+  const featuredContent = data.featuredContents.data
   return (<>
-  <CustomCarousel elementsArray={data.featuredContents.data}></CustomCarousel>
+  <CustomCarousel elementsArray={featuredContent}></CustomCarousel>
   </>
   )
 }
