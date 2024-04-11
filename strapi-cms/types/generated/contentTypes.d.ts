@@ -972,28 +972,6 @@ export interface ApiStudentStudent extends Schema.CollectionType {
   };
 }
 
-export interface ApiTestTest extends Schema.CollectionType {
-  collectionName: 'tests';
-  info: {
-    singularName: 'test';
-    pluralName: 'tests';
-    displayName: 'test';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    asd: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::test.test', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::test.test', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1017,7 +995,6 @@ declare module '@strapi/types' {
       'api::footer.footer': ApiFooterFooter;
       'api::public-chart.public-chart': ApiPublicChartPublicChart;
       'api::student.student': ApiStudentStudent;
-      'api::test.test': ApiTestTest;
     }
   }
 }
