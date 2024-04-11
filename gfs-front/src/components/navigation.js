@@ -27,7 +27,6 @@ const ScrollAwareNavbar=()=> {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto"> 
                         <Nav.Link className='custom-navlink' as={Link} to="/">Home</Nav.Link>
-                        <Nav.Link className='custom-navlink' as={Link} to="/dashboard">Dashboard</Nav.Link>
                         <Nav.Link className='custom-navlink' as={Link} to="/students">Students</Nav.Link>
                         <Nav.Link className='custom-navlink' as={Link} to="/charts">Charts</Nav.Link>
                         <Nav.Link className='custom-navlink' as={Link} to="/about">About</Nav.Link>
