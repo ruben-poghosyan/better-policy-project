@@ -20,7 +20,6 @@ const Home = () => {
   if (error) return (<p>Error :(</p>)
   const featuredContent = data.featuredContents.data
   return (<>
-  Rebase Test Done
   <CustomCarousel elementsArray={featuredContent}></CustomCarousel>
   </>
   )
