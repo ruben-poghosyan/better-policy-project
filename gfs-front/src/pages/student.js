@@ -3,6 +3,7 @@ import { useQuery, gql } from '@apollo/client';
 import { useParams } from "react-router-dom";
 import Loading from '../components/centeredspinner';
 import { Container, Row, Col, Image } from 'react-bootstrap';
+import icon from '../person-square.svg';
 import ReactMarkdown from 'react-markdown';
 const getStudentbyId = gql`
 query getStudentbyId ($id: ID!){
@@ -34,17 +35,24 @@ const Student = () => {
       });
     if (loading) return (<Loading/>)
     if (error) return (<p>Error :(</p>)
+    if(!data.student.data) return (<p>Error :(</p>)
     const studentTitle = data.student.data.attributes.title
     const studentBio = data.student.data.attributes.bio
     const studentLevel = data.student.data.attributes.level
     const studentName = data.student.data.attributes.Name
-    const pfp = process.env.REACT_APP_CMS_URI + data.student.data.attributes.pfp.data.attributes.url
+    let pfp = null
+    if (data.student.data.attributes.pfp.data) {
+      pfp = process.env.REACT_APP_CMS_URI + data.student.data.attributes.pfp.data.attributes.url
+    }
+    else {
+      pfp = icon
+    }
     return (
       <Container>
         <Row>
           <Col lg={4}>
             {/* Profile Photo */}
-            <Image className='shadow' style={{padding:"15px 15px 15px 15px"}} src={pfp} alt="Profile Photo" fluid />
+            <Image className='shadow' style={{padding:"15px 15px 15px 15px", minWidth:"300px", minHeight:"300px"}} src={pfp} alt="Profile Photo" fluid />
           </Col>
           <Col lg={8} className="mt-4 mt-lg-0">
             {/* Biography */}
