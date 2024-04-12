@@ -26,7 +26,7 @@ const ScrollAwareNavbar=()=> {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto"> 
-                        <Nav.Link className='custom-navlink' as={Link} to="/">Home</Nav.Link>
+                        <Nav.Link className='custom-navlink' as={Link} to="/">asd</Nav.Link>
                         <Nav.Link className='custom-navlink' as={Link} to="/students">Students</Nav.Link>
                         <Nav.Link className='custom-navlink' as={Link} to="/charts">Charts</Nav.Link>
                         <Nav.Link className='custom-navlink' as={Link} to="/about">About</Nav.Link>
