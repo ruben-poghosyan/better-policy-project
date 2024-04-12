@@ -26,3 +26,10 @@
 }
 .content-root { display: flex; flex-direction: column; min-height: 100dvh; }
 .content { flex-grow: 1; }
+
+blockquote {
+  color: #666;
+  margin: 0;
+  padding-left: 3em;
+  border-left: 0.5em #eee solid;
+}
